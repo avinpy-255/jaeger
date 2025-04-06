@@ -42,7 +42,7 @@ import (
 	depsmocks "github.com/jaegertracing/jaeger/internal/storage/v2/api/depstore/mocks"
 	"github.com/jaegertracing/jaeger/internal/storage/v2/v1adapter"
 	"github.com/jaegertracing/jaeger/internal/tenancy"
-	ui "github.com/jaegertracing/jaeger/model/json"
+	ui "github.com/jaegertracing/jaeger/internal/uimodel"
 )
 
 const millisToNanosMultiplier = int64(time.Millisecond / time.Nanosecond)
@@ -666,7 +666,7 @@ func TestGetOperationsSuccess(t *testing.T) {
 
 	err := getJSON(ts.server.URL+"/api/operations?service=abc%2Ftrifle&spanKind=server", &response)
 	require.NoError(t, err)
-	assert.Equal(t, len(expectedOperations), len(response.Operations))
+	assert.Len(t, response.Operations, len(expectedOperations))
 	for i, op := range response.Operations {
 		assert.Equal(t, expectedOperations[i].Name, op.Name)
 		assert.Equal(t, expectedOperations[i].SpanKind, op.SpanKind)

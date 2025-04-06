@@ -20,10 +20,10 @@ import (
 
 	"github.com/jaegertracing/jaeger-idl/model/v1"
 	"github.com/jaegertracing/jaeger/internal/metricstest"
+	"github.com/jaegertracing/jaeger/internal/storage/cassandra/mocks"
 	"github.com/jaegertracing/jaeger/internal/storage/v1/api/spanstore"
 	"github.com/jaegertracing/jaeger/internal/storage/v1/cassandra/spanstore/dbmodel"
 	"github.com/jaegertracing/jaeger/internal/testutils"
-	"github.com/jaegertracing/jaeger/pkg/cassandra/mocks"
 )
 
 type spanWriterTest struct {
@@ -239,7 +239,7 @@ func TestSpanWriter(t *testing.T) {
 					assert.Contains(t, w.logBuffer.String(), expectedLog)
 				}
 				if len(testCase.expectedLogs) == 0 {
-					assert.Equal(t, "", w.logBuffer.String())
+					assert.Empty(t, w.logBuffer.String())
 				}
 			})
 		})
